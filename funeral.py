@@ -8,11 +8,10 @@ import csv
 import re
 import time
 
-driver = webdriver.Chrome()
-driver.get("http://www.nebraska.gov/LISSearch/search.cgi")
-assert "Nebraska DHHS" in driver.title
-
 def scrapeFunerals():
+    driver = webdriver.Chrome()
+    driver.get("http://www.nebraska.gov/LISSearch/search.cgi")
+    assert "Nebraska DHHS" in driver.title
     business = driver.find_element_by_xpath("//input[@value='E']")
     business.click()
     select = WebDriverWait(driver, 10).until(
@@ -48,7 +47,7 @@ def scrapeFunerals():
         if error.search(str(soup)):
             viols = ""
         else:
-            viols = "x"
+            viols = "~"
         attrs = soup.find_all('div', {'class': 'fieldValue'})
         data = []
         print attrs[0].text
